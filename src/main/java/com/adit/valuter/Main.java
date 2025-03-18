@@ -1,7 +1,17 @@
 package com.adit.valuter;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        try{
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        }catch(Exception e){
+            System.err.println("Failed to initialize LaF!");
+        }
+        PinPrompt ui = new PinPrompt();
     }
 }
