@@ -12,6 +12,7 @@ public class Main {
         }catch(Exception e){
             System.err.println("Failed to initialize LaF!");
         }
+        //PinPrompt ui1 = new PinPrompt();
         CreatePin ui = new CreatePin();
     }
 }

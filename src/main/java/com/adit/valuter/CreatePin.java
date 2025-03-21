@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CreatePin {
+    //Form Elements
     private JPanel superContainer;
     private JPanel fieldContainer;
     private JLabel lbl_pin;
@@ -33,11 +34,17 @@ public class CreatePin {
             "What was your childhood nickname?",
             "What is your favorite food?"
     };//Question Pool for JComboBox combo_ques1 and combo_ques2
+
     CreatePin(){
+        // Display '●' to Hide Actual PIN
         pass_pin.setEchoChar('●');
         pass_confirm.setEchoChar('●');
+
+        //Add Question Pool to Combo Boxes as Options
         combo_ques1.setModel(new DefaultComboBoxModel<>(questions));
         combo_ques2.setModel(new DefaultComboBoxModel<>(questions));
+
+        //Prevent Duplicate Questions in Combo Boxes
         combo_ques1.setSelectedIndex(0);
         combo_ques2.setSelectedIndex(1);
         combo_ques1.addItemListener(new ItemListener() {
@@ -52,8 +59,13 @@ public class CreatePin {
                 updateComboBoxes(combo_ques2,combo_ques1);
             }
         });
+
+        //Implement PIN Show/Hide Logic
         btn_showhide1.addActionListener(e -> updateShowButton(btn_showhide1, pass_pin));
         btn_showhide2.addActionListener(e -> updateShowButton(btn_showhide2, pass_confirm));
+
+        //Implement Submission Logic
+        btn_submit.addActionListener(e -> getResponse(pass_pin, txt_ans1, txt_ans2));
 
         JFrame containerFrame = new JFrame("Vaulter - Create PIN");
         containerFrame.setContentPane(superContainer);
@@ -63,6 +75,8 @@ public class CreatePin {
         containerFrame.setSize(450,500);
         containerFrame.setVisible(true);
     }
+
+    //Define PIN Show/Hide Logic
     private void updateComboBoxes(JComboBox<String> source, JComboBox<String> target) {
         if (isUpdating) return;  // Prevent recursion
         isUpdating = true;
@@ -91,5 +105,10 @@ public class CreatePin {
             pf.setEchoChar('●');
             btn.setIcon(new ImageIcon("src/main/resources/show_24X24.png"));
         }
+    }
+
+    // Fetch User Response
+    public String[] getResponse(JPasswordField pin, JTextField ans1, JTextField ans2){
+        return new String[] {Arrays.toString(pin.getPassword()),(ans1.getText()+ans2.getText())};
     }
 }
